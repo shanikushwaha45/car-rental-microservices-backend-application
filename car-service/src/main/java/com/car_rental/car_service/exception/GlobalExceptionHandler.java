@@ -1,5 +1,6 @@
 package com.car_rental.car_service.exception;
 
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,6 +32,19 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+
+
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<Map<String, String>> handleOwnerNotFound(
+            FeignException.NotFound exception) {
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Car owner does not exist");
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(response);
     }
 }
