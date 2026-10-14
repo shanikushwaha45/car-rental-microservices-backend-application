@@ -1,8 +1,10 @@
 
 package com.car_rental.customer_service.controller;
 
+import com.car_rental.customer_service.dto.CustomerLoginRequestDto;
 import com.car_rental.customer_service.dto.CustomerRequestDto;
 import com.car_rental.customer_service.dto.CustomerResponseDto;
+import com.car_rental.customer_service.dto.LoginResponseDto;
 import com.car_rental.customer_service.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,5 +50,12 @@ public class CustomerController {
             @PathVariable String email) {
 
         return customerService.getCustomerByEmail(email);
+    }
+
+
+    @PostMapping("/login")
+    public LoginResponseDto loginCustomer(
+            @Valid @RequestBody CustomerLoginRequestDto requestDto) {
+        return customerService.loginCustomer(requestDto);
     }
 }
